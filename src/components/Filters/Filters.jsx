@@ -6,11 +6,14 @@ const Filters = ({
   onSearchChange,
   category,
   onCategoryChange,
+  sortOrder,
+  onSortOrderChange,
   categories,
 }) => {
   const handleClear = () => {
     onSearchChange("");
     onCategoryChange("all");
+    onSortOrderChange("none");
   };
 
   return (
@@ -30,6 +33,14 @@ const Filters = ({
             {cat === "all" ? "All categories" : cat}
           </option>
         ))}
+      </select>
+      <select
+        value={sortOrder}
+        onChange={(e) => onSortOrderChange(e.target.value)}
+      >
+        <option value="none">Sort by price</option>
+        <option value="asc">Low → High</option>
+        <option value="desc">High → Low</option>
       </select>
       <button type="button" onClick={handleClear}>
         Clear all

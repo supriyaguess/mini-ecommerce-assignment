@@ -11,6 +11,7 @@ const App = () => {
   // filter state
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("all");
+  const [sortOrder, setSortOrder] = useState("none");
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -47,8 +48,14 @@ const App = () => {
       data = data.filter((p) => p.category === category);
     }
 
+    if (sortOrder === "asc") {
+      data.sort((a, b) => a.price - b.price);
+    } else if (sortOrder === "desc") {
+      data.sort((a, b) => b.price - a.price);
+    }
+
     return data;
-  }, [products, searchTerm, category]);
+  }, [products, searchTerm, category, sortOrder]);
 
   const renderContent = () => {
     if (status === "loading") return <p>Loading products...</p>;
@@ -69,6 +76,8 @@ const App = () => {
             onSearchChange={setSearchTerm}
             category={category}
             onCategoryChange={setCategory}
+            sortOrder={sortOrder}
+            onSortOrderChange={setSortOrder}
             categories={categories}
           />
           {renderContent()}
