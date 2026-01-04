@@ -3,6 +3,8 @@ import { fetchProducts } from "./api/productsApi";
 import ProductList from "./components/ProductList/ProductList";
 import Filters from "./components/Filters/Filters";
 import Cart from "./components/Cart/Cart";
+import EmptyState from "./components/EmptyState/EmptyState";
+import Layout from "./components/Layout/Layout";
 import { CartProvider } from "./components/context/CartContext";
 import "./App.css";
 
@@ -62,36 +64,39 @@ const App = () => {
   const renderContent = () => {
     if (status === "loading") return <p>Loading products...</p>;
     if (status === "error") return <p>Error loading products</p>;
+    if (filteredProducts.length === 0) {
+      return (
+        <EmptyState
+          title="No products found"
+          description="Try adjusting your filters or search."
+        />
+      );
+    }
     return <ProductList products={filteredProducts} />;
   };
 
   return (
     <CartProvider>
-      <div className="app">
-        <header className="app-header">
-          <h1>Mini E‑Commerce</h1>
-        </header>
-        <main className="app-main">
-          <div className="app-container">
-            <section className="products-section">
-              <h2>Products ({filteredProducts.length})</h2>
-              <Filters
-                searchTerm={searchTerm}
-                onSearchChange={setSearchTerm}
-                category={category}
-                onCategoryChange={setCategory}
-                sortOrder={sortOrder}
-                onSortOrderChange={setSortOrder}
-                categories={categories}
-              />
-              {renderContent()}
-            </section>
-            <aside className="cart-section">
-              <Cart />
-            </aside>
-          </div>
-        </main>
-      </div>
+      <Layout>
+        <div className="app-container">
+          <section className="products-section">
+            <h2>Products ({filteredProducts.length})</h2>
+            <Filters
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+              category={category}
+              onCategoryChange={setCategory}
+              sortOrder={sortOrder}
+              onSortOrderChange={setSortOrder}
+              categories={categories}
+            />
+            {renderContent()}
+          </section>
+          <aside className="cart-section">
+            <Cart />
+          </aside>
+        </div>
+      </Layout>
     </CartProvider>
   );
 };

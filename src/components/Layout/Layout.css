@@ -1,0 +1,13 @@
+.layout-root {
+  min-height: 100vh;
+}
+
+.layout-header {
+  background: #222;
+  color: #fff;
+  padding: 12px 16px;
+}
+
+.layout-main {
+  padding: 16px;
+}
