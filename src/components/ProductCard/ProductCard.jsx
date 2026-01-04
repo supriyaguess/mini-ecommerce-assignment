@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
       )}
       <h3 className="product-title">{product.title}</h3>
       <p className="product-category">{product.category}</p>
-      <p className="product-price">₹ {product.price}</p>
+      <p className="product-price">$ {product.price}</p>
       <p className={`product-stock ${isOutOfStock ? "out" : "in"}`}>
         {isOutOfStock ? "Out of stock" : "In stock"}
       </p>
