@@ -13,7 +13,17 @@
   padding: 16px;
 }
 
-.products-section {
-  max-width: 1200px;
+.app-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  max-width: 1400px;
   margin: 0 auto;
+}
+
+.products-section,
+.cart-section {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 12px;
 }

@@ -1,7 +1,9 @@
 import React from "react";
 import "./ProductCard.css";
+import { useCart } from "../context/CartContext";
 
 const ProductCard = ({ product }) => {
+  const { addToCart } = useCart();
   const isOutOfStock = product.stock <= 0;
 
   return (
@@ -15,10 +17,17 @@ const ProductCard = ({ product }) => {
       )}
       <h3 className="product-title">{product.title}</h3>
       <p className="product-category">{product.category}</p>
-      <p className="product-price">$ {product.price}</p>
+      <p className="product-price">₹ {product.price}</p>
       <p className={`product-stock ${isOutOfStock ? "out" : "in"}`}>
         {isOutOfStock ? "Out of stock" : "In stock"}
       </p>
+      <button
+        type="button"
+        onClick={() => addToCart(product)}
+        disabled={isOutOfStock}
+      >
+        {isOutOfStock ? "Unavailable" : "Add to cart"}
+      </button>
     </div>
   );
 };

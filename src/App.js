@@ -2,6 +2,8 @@ import React, { useEffect, useState, useMemo } from "react";
 import { fetchProducts } from "./api/productsApi";
 import ProductList from "./components/ProductList/ProductList";
 import Filters from "./components/Filters/Filters";
+import Cart from "./components/Cart/Cart";
+import { CartProvider } from "./components/context/CartContext";
 import "./App.css";
 
 const App = () => {
@@ -64,26 +66,33 @@ const App = () => {
   };
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1>Mini E‑Commerce</h1>
-      </header>
-      <main className="app-main">
-        <section className="products-section">
-          <h2>Products ({filteredProducts.length})</h2>
-          <Filters
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            category={category}
-            onCategoryChange={setCategory}
-            sortOrder={sortOrder}
-            onSortOrderChange={setSortOrder}
-            categories={categories}
-          />
-          {renderContent()}
-        </section>
-      </main>
-    </div>
+    <CartProvider>
+      <div className="app">
+        <header className="app-header">
+          <h1>Mini E‑Commerce</h1>
+        </header>
+        <main className="app-main">
+          <div className="app-container">
+            <section className="products-section">
+              <h2>Products ({filteredProducts.length})</h2>
+              <Filters
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
+                category={category}
+                onCategoryChange={setCategory}
+                sortOrder={sortOrder}
+                onSortOrderChange={setSortOrder}
+                categories={categories}
+              />
+              {renderContent()}
+            </section>
+            <aside className="cart-section">
+              <Cart />
+            </aside>
+          </div>
+        </main>
+      </div>
+    </CartProvider>
   );
 };
 
