@@ -2,12 +2,12 @@ import React from "react";
 import "./ProductCard.css";
 import { useCart } from "../context/CartContext";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onClick }) => {
   const { addToCart } = useCart();
   const isOutOfStock = product.stock <= 0;
 
   return (
-    <div className="product-card">
+    <div className="product-card" onClick={onClick}>
       {product.thumbnail && (
         <img
           src={product.thumbnail}
@@ -23,7 +23,10 @@ const ProductCard = ({ product }) => {
       </p>
       <button
         type="button"
-        onClick={() => addToCart(product)}
+        onClick={(e) => {
+          e.stopPropagation();
+          addToCart(product);
+        }}
         disabled={isOutOfStock}
       >
         {isOutOfStock ? "Unavailable" : "Add to cart"}

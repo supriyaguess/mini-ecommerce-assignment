@@ -5,12 +5,14 @@ import Filters from "./components/Filters/Filters";
 import Cart from "./components/Cart/Cart";
 import EmptyState from "./components/EmptyState/EmptyState";
 import Layout from "./components/Layout/Layout";
+import ProductDetailsModal from "./components/ProductDetailsModal/ProductDetailsModal";
 import { CartProvider } from "./components/context/CartContext";
 import "./App.css";
 
 const App = () => {
   const [products, setProducts] = useState([]);
   const [status, setStatus] = useState("idle");
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   // filter state
   const [searchTerm, setSearchTerm] = useState("");
@@ -72,7 +74,12 @@ const App = () => {
         />
       );
     }
-    return <ProductList products={filteredProducts} />;
+    return (
+      <ProductList
+        products={filteredProducts}
+        onProductClick={setSelectedProduct}
+      />
+    );
   };
 
   return (
@@ -96,6 +103,12 @@ const App = () => {
             <Cart />
           </aside>
         </div>
+        {selectedProduct && (
+          <ProductDetailsModal
+            product={selectedProduct}
+            onClose={() => setSelectedProduct(null)}
+          />
+        )}
       </Layout>
     </CartProvider>
   );

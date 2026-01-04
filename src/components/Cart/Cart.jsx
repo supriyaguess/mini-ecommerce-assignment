@@ -1,6 +1,7 @@
 import React from "react";
 import "./Cart.css";
 import { useCart } from "../context/CartContext";
+import EmptyState from "../EmptyState/EmptyState";
 
 const Cart = () => {
   const { items, totalItems, totalPrice, removeFromCart, updateQuantity } =
@@ -10,7 +11,7 @@ const Cart = () => {
     return (
       <div className="cart">
         <h3>Cart</h3>
-        <p>Empty cart</p>
+        <EmptyState title="Empty cart" description="Add some products." />
       </div>
     );
   }
@@ -18,13 +19,15 @@ const Cart = () => {
   return (
     <div className="cart">
       <h3>Cart ({totalItems})</h3>
-      <p>Total: ₹ {totalPrice}</p>
+      <p className="cart-summary">
+        Total items: {totalItems} | Total price: ₹ {totalPrice}
+      </p>
       <ul className="cart-list">
         {items.map((item) => (
           <li key={item.id} className="cart-item">
             <div className="cart-item-main">
-              <span>{item.title}</span>
-              <span>₹ {item.price}</span>
+              <span className="cart-title">{item.title}</span>
+              <span className="cart-price">₹ {item.price}</span>
             </div>
             <div className="cart-item-controls">
               <label>
@@ -45,6 +48,10 @@ const Cart = () => {
               >
                 Remove
               </button>
+            </div>
+            <div className="cart-item-footer">
+              <span>Subtotal: ₹ {item.price * item.quantity}</span>
+              <span className="cart-stock">Max stock: {item.stock}</span>
             </div>
           </li>
         ))}
